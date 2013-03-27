@@ -1,0 +1,285 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A951BE1D1702C78B000D3866 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A951BE1C1702C78B000D3866 /* UIKit.framework */; };
+		A951BE1F1702C78B000D3866 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A951BE1E1702C78B000D3866 /* Foundation.framework */; };
+		A951BE211702C78B000D3866 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A951BE201702C78B000D3866 /* CoreGraphics.framework */; };
+		A951BE271702C78B000D3866 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A951BE251702C78B000D3866 /* InfoPlist.strings */; };
+		A951BE291702C78B000D3866 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A951BE281702C78B000D3866 /* main.m */; };
+		A951BE2D1702C78B000D3866 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A951BE2C1702C78B000D3866 /* AppDelegate.m */; };
+		A951BE2F1702C78B000D3866 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A951BE2E1702C78B000D3866 /* Default.png */; };
+		A951BE311702C78B000D3866 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A951BE301702C78B000D3866 /* Default@2x.png */; };
+		A951BE331702C78B000D3866 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A951BE321702C78B000D3866 /* Default-568h@2x.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A951BE191702C78B000D3866 /* NewsReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A951BE1C1702C78B000D3866 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A951BE1E1702C78B000D3866 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A951BE201702C78B000D3866 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A951BE241702C78B000D3866 /* NewsReader-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NewsReader-Info.plist"; sourceTree = "<group>"; };
+		A951BE261702C78B000D3866 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A951BE281702C78B000D3866 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A951BE2A1702C78B000D3866 /* NewsReader-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NewsReader-Prefix.pch"; sourceTree = "<group>"; };
+		A951BE2B1702C78B000D3866 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A951BE2C1702C78B000D3866 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A951BE2E1702C78B000D3866 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		A951BE301702C78B000D3866 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		A951BE321702C78B000D3866 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A951BE161702C78B000D3866 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A951BE1D1702C78B000D3866 /* UIKit.framework in Frameworks */,
+				A951BE1F1702C78B000D3866 /* Foundation.framework in Frameworks */,
+				A951BE211702C78B000D3866 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A951BE101702C78B000D3866 = {
+			isa = PBXGroup;
+			children = (
+				A951BE221702C78B000D3866 /* NewsReader */,
+				A951BE1B1702C78B000D3866 /* Frameworks */,
+				A951BE1A1702C78B000D3866 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A951BE1A1702C78B000D3866 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A951BE191702C78B000D3866 /* NewsReader.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A951BE1B1702C78B000D3866 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A951BE1C1702C78B000D3866 /* UIKit.framework */,
+				A951BE1E1702C78B000D3866 /* Foundation.framework */,
+				A951BE201702C78B000D3866 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A951BE221702C78B000D3866 /* NewsReader */ = {
+			isa = PBXGroup;
+			children = (
+				A951BE2B1702C78B000D3866 /* AppDelegate.h */,
+				A951BE2C1702C78B000D3866 /* AppDelegate.m */,
+				A951BE231702C78B000D3866 /* Supporting Files */,
+			);
+			path = NewsReader;
+			sourceTree = "<group>";
+		};
+		A951BE231702C78B000D3866 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A951BE241702C78B000D3866 /* NewsReader-Info.plist */,
+				A951BE251702C78B000D3866 /* InfoPlist.strings */,
+				A951BE281702C78B000D3866 /* main.m */,
+				A951BE2A1702C78B000D3866 /* NewsReader-Prefix.pch */,
+				A951BE2E1702C78B000D3866 /* Default.png */,
+				A951BE301702C78B000D3866 /* Default@2x.png */,
+				A951BE321702C78B000D3866 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A951BE181702C78B000D3866 /* NewsReader */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A951BE361702C78B000D3866 /* Build configuration list for PBXNativeTarget "NewsReader" */;
+			buildPhases = (
+				A951BE151702C78B000D3866 /* Sources */,
+				A951BE161702C78B000D3866 /* Frameworks */,
+				A951BE171702C78B000D3866 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NewsReader;
+			productName = NewsReader;
+			productReference = A951BE191702C78B000D3866 /* NewsReader.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A951BE111702C78B000D3866 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Antonio Rodrigues";
+			};
+			buildConfigurationList = A951BE141702C78B000D3866 /* Build configuration list for PBXProject "NewsReader" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A951BE101702C78B000D3866;
+			productRefGroup = A951BE1A1702C78B000D3866 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A951BE181702C78B000D3866 /* NewsReader */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A951BE171702C78B000D3866 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A951BE271702C78B000D3866 /* InfoPlist.strings in Resources */,
+				A951BE2F1702C78B000D3866 /* Default.png in Resources */,
+				A951BE311702C78B000D3866 /* Default@2x.png in Resources */,
+				A951BE331702C78B000D3866 /* Default-568h@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A951BE151702C78B000D3866 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A951BE291702C78B000D3866 /* main.m in Sources */,
+				A951BE2D1702C78B000D3866 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A951BE251702C78B000D3866 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A951BE261702C78B000D3866 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A951BE341702C78B000D3866 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		A951BE351702C78B000D3866 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A951BE371702C78B000D3866 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NewsReader/NewsReader-Prefix.pch";
+				INFOPLIST_FILE = "NewsReader/NewsReader-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A951BE381702C78B000D3866 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NewsReader/NewsReader-Prefix.pch";
+				INFOPLIST_FILE = "NewsReader/NewsReader-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A951BE141702C78B000D3866 /* Build configuration list for PBXProject "NewsReader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A951BE341702C78B000D3866 /* Debug */,
+				A951BE351702C78B000D3866 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A951BE361702C78B000D3866 /* Build configuration list for PBXNativeTarget "NewsReader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A951BE371702C78B000D3866 /* Debug */,
+				A951BE381702C78B000D3866 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A951BE111702C78B000D3866 /* Project object */;
+}
