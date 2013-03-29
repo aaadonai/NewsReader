@@ -11,6 +11,7 @@
 #import "ImageDownloader.h"
 
 #define kCellPadding 10.0f
+#define kFooterCellPadding 5.0f
 #define kCellPaddingLeft 5.0f
 // note that cell will have Accessory (>)
 // and kCellPaddingRight starts from it.
@@ -19,7 +20,6 @@
 #define kHeadlineFontSize 20.0f
 #define kSluglineFontSize 14.0f
 #define kDatelineFontSize 10.0f
-
 
 #define kHeadlineFont @"TimesNewRomanPSMT"
 
@@ -32,6 +32,6 @@
 
 + (CGFloat) heightOfHeadline: (NSString *)content withWidth:(CGFloat) width;
 + (CGFloat) heightOfSlugline: (NSString *)content withWidth:(CGFloat) width;
-
++ (CGFloat) heightOfDateline: (NSString *)content withWidth:(CGFloat) width;
 
 @end

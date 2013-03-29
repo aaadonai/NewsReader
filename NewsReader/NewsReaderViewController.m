@@ -114,35 +114,37 @@ static NSString *const NewsFeed = @"http://mobilatr.mob.f2.com.au/services/views
     CGFloat heightToReturn = 0;
     int newsCount = [self.newsEntries count];
     if (newsCount > 0) {
-        //UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+        
         // Magic Number Warning
-        float cellAccessoryViewWidth = 20; //at this can't define Accessory (>) width programmatically
+        float cellAccessoryViewWidth = 20; //at this point can't define Accessory (>) width programmatically
         
         float width = [self cellWidthWithScreenBoundsAndDeviceOrientation] - cellAccessoryViewWidth - kCellPaddingLeft - kCellPaddingRigth;
         NewsRecord *newsRecord = [self.newsEntries objectAtIndex:indexPath.row];
-        
         CGFloat headLineHeight = [NewsFeedCell heightOfHeadline:newsRecord.newsHeadline withWidth:width];
         
         heightToReturn += headLineHeight;
+
+        CGFloat datelineHeight = [NewsFeedCell heightOfDateline:newsRecord.dateLine withWidth:width];
+        
+        heightToReturn += datelineHeight;
         
         if (newsRecord.hasSlugline && newsRecord.hasImage) {
             CGFloat slugLineHeight = [NewsFeedCell heightOfSlugline:newsRecord.slugLine withWidth:width - kImageWidth];
-            if (slugLineHeight > kImageHeight + kCellPadding){
+            if (slugLineHeight > kImageHeight){
                 heightToReturn += slugLineHeight;
             } else {
-                heightToReturn += kImageHeight + kCellPadding;
+                heightToReturn += kImageHeight ;
             }
         } else {
             if (newsRecord.hasImage){
-               heightToReturn += kImageHeight + kCellPadding;
+               heightToReturn += kImageHeight;
             } else if (newsRecord.hasSlugline){
                 CGFloat slugLineHeight = [NewsFeedCell heightOfSlugline:newsRecord.slugLine withWidth:width];
                 heightToReturn += slugLineHeight;
             }
         }
-        
     }
-
+    
     if (heightToReturn > 0){
         return heightToReturn;
     }
@@ -185,6 +187,9 @@ static NSString *const NewsFeed = @"http://mobilatr.mob.f2.com.au/services/views
         
         cell.headlineLabel.text = newsRecord.newsHeadline;
         cell.slugLineLabel.text = newsRecord.slugLine;
+        cell.datelineLabel.text = [Utils datelineToDisplay:newsRecord.dateLine];
+        
+        NSLog(@"cell.datelineLabel.text: %@", cell.datelineLabel.text);
         
         NSLog(@"cell width: %f", cell.frame.size.width);
         NSLog(@"slugline Y: %f", cell.slugLineLabel.frame.origin.y);
@@ -382,24 +387,27 @@ static NSString *const NewsFeed = @"http://mobilatr.mob.f2.com.au/services/views
     
     if ([self.newsEntries count] > 0) {
         
-        
         NewsRecord *newsRecord = [self.newsEntries objectAtIndex:indexPath.row];
         
-        CGSize sluglineLabelSize;
+        // Will only set sluglineLabel if slugline is available
         if (newsRecord.hasSlugline){
             if (newsRecord.hasImage) {
                 // reset calculatedConstrainedWidth
                 calculatedConstrainedWidth = calculatedConstrainedWidth - kImageWidth - kCellPaddingRigth;
             }
-            sluglineLabelSize = [Utils getLabelSize:newsFeedCell.slugLineLabel withConstrainedWidth:calculatedConstrainedWidth];
+            CGSize sluglineLabelSize = [Utils getLabelSize:newsFeedCell.slugLineLabel withConstrainedWidth:calculatedConstrainedWidth];
+            newsFeedCell.slugLineLabel.frame =  CGRectMake(newsFeedCell.headlineLabel.frame.origin.x, newsFeedCell.headlineLabel.frame.origin.y + newsFeedCell.headlineLabel.frame.size.height, sluglineLabelSize.width, sluglineLabelSize.height);
         }
         
-        newsFeedCell.slugLineLabel.frame =  CGRectMake(newsFeedCell.headlineLabel.frame.origin.x, newsFeedCell.headlineLabel.frame.origin.y + newsFeedCell.headlineLabel.frame.size.height, sluglineLabelSize.width, sluglineLabelSize.height);
         
         if (newsRecord.hasImage) {
             CGFloat imageViewFrameX = cell.contentView.frame.size.width - kImageWidth - kCellPaddingRigth;
             newsFeedCell.imageView.frame = CGRectMake(imageViewFrameX, newsFeedCell.headlineLabel.frame.origin.y + newsFeedCell.headlineLabel.frame.size.height, kImageWidth, kImageHeight);
         }
+        
+        CGSize datelineLabelSize = [Utils getLabelSize:newsFeedCell.datelineLabel withConstrainedWidth:cell.contentView.frame.size.width];
+        CGFloat datelineFrameY = newsFeedCell.frame.size.height - datelineLabelSize.height - kFooterCellPadding;
+        newsFeedCell.datelineLabel.frame = CGRectMake(newsFeedCell.headlineLabel.frame.origin.x, datelineFrameY, datelineLabelSize.width, datelineLabelSize.height);
     }
 
 }

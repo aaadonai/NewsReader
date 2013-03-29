@@ -8,10 +8,6 @@
 
 #import "NewsFeedCell.h"
 
-// These are just reference values will resize in ViewController
-#define kDefaultCellWidth 300.0
-#define kDefaultCellHeight 300.0
-
 @interface NewsFeedCell() {
     UILabel     *headlineLabel;
     UILabel     *slugLineLabel;
@@ -67,15 +63,15 @@
         [self addSubview:slugLineLabel];
 
         // Create UIImageView
-        CGRect imageViewFrame = CGRectMake(kDefaultCellWidth - kImageWidth - kCellPaddingRigth, kCellPadding + kDefaultHeight, kImageWidth, kImageHeight);
+        CGRect imageViewFrame = CGRectMake(kImageWidth - kCellPaddingRigth, kCellPadding + kDefaultHeight, kImageWidth, kImageHeight);
         imageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
         
         [self addSubview:imageView];
         
         // Create Dateline Label
-        CGRect datelineFrame = CGRectMake(kCellPaddingLeft, kCellPadding + kDefaultHeight, self.superview.frame.size.width, kDefaultHeight);
+        CGRect datelineFrame = CGRectMake(kCellPaddingLeft, kCellPadding + headlineLabel.frame.size.height + slugLineLabel.frame.size.height, self.superview.frame.size.width, kDefaultHeight);
         datelineLabel = [[[UILabel alloc] initWithFrame:datelineFrame] autorelease];
-        datelineLabel.textColor = [UIColor blackColor];
+        datelineLabel.textColor = [UIColor darkGrayColor];
         datelineLabel.backgroundColor = [UIColor clearColor];
         
         datelineLabel.font = [UIFont systemFontOfSize:kDatelineFontSize];
@@ -97,23 +93,33 @@
 
 #pragma mark - Custom methods
 
-// Will return Headline height based o text and font
+// Will return Headline height based on text and font
 + (CGFloat) heightOfHeadline: (NSString *)content withWidth:(CGFloat) width {
     CGFloat contentHeight =
     [content sizeWithFont: [UIFont fontWithName:kHeadlineFont size:kHeadlineFontSize]
-        constrainedToSize: CGSizeMake(width - kCellPaddingLeft - kCellPaddingRigth, kDefaultCellHeight )
+        constrainedToSize: CGSizeMake(width - kCellPaddingLeft - kCellPaddingRigth, MAXFLOAT )
             lineBreakMode: UILineBreakModeWordWrap].height;
     return contentHeight + kCellPadding;
 }
 
-// Will return Slugline height based o text and font
+// Will return Slugline height based on text and font
 + (CGFloat) heightOfSlugline: (NSString *)content withWidth:(CGFloat) width {
     CGFloat contentHeight =
     [content sizeWithFont: [UIFont systemFontOfSize:kSluglineFontSize]
-        constrainedToSize: CGSizeMake(width - kCellPaddingLeft - kCellPaddingRigth, kDefaultCellHeight )
+        constrainedToSize: CGSizeMake(width - kCellPaddingLeft - kCellPaddingRigth, MAXFLOAT )
             lineBreakMode: UILineBreakModeWordWrap].height;
-    return contentHeight + kCellPadding;
+    return contentHeight + kFooterCellPadding;
 
+}
+
+// Will return Dateline height based on text and font
++ (CGFloat) heightOfDateline: (NSString *)content withWidth:(CGFloat) width {
+    CGFloat contentHeight =
+    [content sizeWithFont: [UIFont systemFontOfSize:kDatelineFontSize]
+        constrainedToSize: CGSizeMake(width - kCellPaddingLeft - kCellPaddingRigth, MAXFLOAT )
+            lineBreakMode: UILineBreakModeWordWrap].height;
+    return contentHeight;
+    
 }
 
 - (void)dealloc {
