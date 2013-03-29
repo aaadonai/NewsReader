@@ -9,13 +9,18 @@
 #import "WebContentViewController.h"
 #import "NewsRecord.h"
 
-@interface WebContentViewController ()
+@interface WebContentViewController() {
+    UIWebView *webView;
+    
+}
+
+
 
 @end
 
 @implementation WebContentViewController
 
-- (id)initWithNewsRecord:(NewsRecord*) newsRecord{
+- (id)initWithNewsRecord:(NewsRecord*) newsRecord {
     self = [super init];
     if (self) {
         // Custom initialization
@@ -26,17 +31,16 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
     // Create UIWebView
-    UIWebView *webView = [[UIWebView alloc] init];
+    webView = [[UIWebView alloc] init];
     
     //Create a URL object.
     NSURL *url = [NSURL URLWithString:self.newsRecord.newsURLString];
-    
+
     //URL Requst Object
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     
@@ -48,14 +52,23 @@
     
     [self setTitle:self.newsRecord.newsHeadline];
     [self setView:webView];
-
     
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+    return YES;
+}
+
+- (void) dealloc {
+    
+    [webView release];
+    
+    [super dealloc];
 }
 
 @end

@@ -8,15 +8,16 @@
 
 #import "NewsReaderViewController.h"
 #import "WebContentViewController.h"
+#import "NewsFeedCell.h"
+#import "Utils.h"
 
 #define kDefaultRowHeight    90.0
 #define kDefaultRowCount     10
+#define kDefaultCellHeight   80
 
+static NSString *const NewsFeed = @"http://mobilatr.mob.f2.com.au/services/views/9.json";
 
-static NSString *const NewsFeed =
-@"http://mobilatr.mob.f2.com.au/services/views/9.json";
-
-@interface NewsReaderViewController (){
+@interface NewsReaderViewController() {
 
     // list of news
     NSMutableArray *newsRecords;
@@ -43,10 +44,7 @@ static NSString *const NewsFeed =
 @synthesize queue;
 @synthesize imageDownloadsInProgress;
 
-
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
+- (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
@@ -54,15 +52,15 @@ static NSString *const NewsFeed =
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    // will adjust subviews' frames for visible cells
+    [self reframeForVisibleCells];
+}
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+- (void)viewDidLoad {
+    [super viewDidLoad];
     
     self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
     self.tableView.rowHeight = kDefaultRowHeight;
@@ -85,8 +83,7 @@ static NSString *const NewsFeed =
     
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     
     [super didReceiveMemoryWarning];
 
@@ -100,8 +97,7 @@ static NSString *const NewsFeed =
 #pragma mark - Table view data source
 
 // customize the number of rows in the table view
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     int count = [newsEntries count];
     
     // return rows to fill the screen
@@ -112,28 +108,61 @@ static NSString *const NewsFeed =
     return count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // customize the appearance of table view cells
-    //
-    static NSString *CellIdentifier = @"LazyTableCell";
+// customize the row height
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    CGFloat heightToReturn = 0;
+    int newsCount = [self.newsEntries count];
+    if (newsCount > 0) {
+        //UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+        // Magic Number Warning
+        float cellAccessoryViewWidth = 20; //at this can't define Accessory (>) width programmatically
+        
+        float width = [self cellWidthWithScreenBoundsAndDeviceOrientation] - cellAccessoryViewWidth - kCellPaddingLeft - kCellPaddingRigth;
+        NewsRecord *newsRecord = [self.newsEntries objectAtIndex:indexPath.row];
+        
+        CGFloat headLineHeight = [NewsFeedCell heightOfHeadline:newsRecord.newsHeadline withWidth:width];
+        
+        heightToReturn += headLineHeight;
+        
+        if (newsRecord.hasSlugline && newsRecord.hasImage) {
+            CGFloat slugLineHeight = [NewsFeedCell heightOfSlugline:newsRecord.slugLine withWidth:width - kImageWidth];
+            if (slugLineHeight > kImageHeight + kCellPadding){
+                heightToReturn += slugLineHeight;
+            } else {
+                heightToReturn += kImageHeight + kCellPadding;
+            }
+        } else {
+            if (newsRecord.hasImage){
+               heightToReturn += kImageHeight + kCellPadding;
+            } else if (newsRecord.hasSlugline){
+                CGFloat slugLineHeight = [NewsFeedCell heightOfSlugline:newsRecord.slugLine withWidth:width];
+                heightToReturn += slugLineHeight;
+            }
+        }
+        
+    }
+
+    if (heightToReturn > 0){
+        return heightToReturn;
+    }
+    return kDefaultCellHeight;
+}
+
+// customize the appearance of table view cells
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *CellIdentifier = @"CellIdentifier";
     static NSString *PlaceholderCellIdentifier = @"PlaceholderCell";
     
-    // add a placeholder cell while waiting on table data
-    int nodeCount = [self.newsEntries count];
+    int newsCount = [self.newsEntries count];
     
-    if (nodeCount == 0 && indexPath.row == 0)
-    {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:PlaceholderCellIdentifier];
-        if (cell == nil)
-        {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+    // add a placeholder cell while waiting on table data
+    if (newsCount == 0 && indexPath.row == 0) {
+        NewsFeedCell *cell = [tableView dequeueReusableCellWithIdentifier:PlaceholderCellIdentifier];
+        if (cell == nil) {
+            cell = [[[NewsFeedCell alloc] initWithStyle:UITableViewCellStyleSubtitle
                                            reuseIdentifier:PlaceholderCellIdentifier] autorelease];
-            cell.detailTextLabel.textAlignment = UITextAlignmentCenter;
-            //cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            cell.selectionStyle = UITableViewCellSelectionStyleGray;
-
         }
         
         cell.detailTextLabel.text = @"Loading…";
@@ -141,35 +170,33 @@ static NSString *const NewsFeed =
         return cell;
     }
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil)
-    {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+    NewsFeedCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[[NewsFeedCell alloc] initWithStyle:UITableViewCellStyleDefault
                                        reuseIdentifier:CellIdentifier] autorelease];
-        //cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.selectionStyle = UITableViewCellSelectionStyleGray;
-
     }
     
     // Leave cells empty if there's no data yet
-    if (nodeCount > 0)
-    {
-        // Set up the cell...
+    if (newsCount > 0) {
+
+        // Set up the cell
         NewsRecord *newsRecord = [self.newsEntries objectAtIndex:indexPath.row];
         NSLog(@"indexPath.row: %d",indexPath.row);
-        cell.textLabel.text = newsRecord.newsHeadline;
-        cell.detailTextLabel.text = newsRecord.slugLine;
+        
+        cell.headlineLabel.text = newsRecord.newsHeadline;
+        cell.slugLineLabel.text = newsRecord.slugLine;
+        
+        NSLog(@"cell width: %f", cell.frame.size.width);
+        NSLog(@"slugline Y: %f", cell.slugLineLabel.frame.origin.y);
         
         // Only load cached images; defer new downloads until scrolling ends
         if (!newsRecord.newsImage)
         {
             if (self.tableView.dragging == NO && self.tableView.decelerating == NO)
             {
-                if (![newsRecord.thumbnailImageURLString isKindOfClass:[NSNull class]]) {
+                if (newsRecord.thumbnailImageURLString) {
+                    // will start download image in the background and callback when done
                     [self startImageDownload:newsRecord forIndexPath:indexPath];
-                    NSLog(@"startImageDownload indexPath.row: %d",indexPath.row);
-                   // cell.imageView.image = [UIImage imageNamed:@"Placeholder.png"];
                 }
             }
             // if a download is deferred or in progress, return a placeholder image
@@ -179,33 +206,45 @@ static NSString *const NewsFeed =
         {
             cell.imageView.image = newsRecord.newsImage;
         }
-        
     }
     
     return cell;
 }
 
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NewsRecord *newsRecord = [self.newsEntries objectAtIndex:indexPath.row];
+    // Add gradient Color
+    [self setGradientColorToCell:cell];
     
-    // Create and push another view controller.
-    WebContentViewController *webContentViewController = [[WebContentViewController alloc] initWithNewsRecord:newsRecord];
-    
-    
-    // Pass the selected object to the new view controller.
-    //[self.navigationController pushViewController:webContentViewController animated:YES];
-    //[webContentViewController release];
-     [self.navigationController pushViewController:webContentViewController animated:YES];
+    // will adjust frame to fit cell
+    [self reframeCellElements:cell forRowAtIndexPath:indexPath];
     
 }
 
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [self reframeForVisibleCells];
+    
+}
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    int newsCount = [self.newsEntries count];
+    if (newsCount > 0) {
+        
+        NewsRecord *newsRecord = [self.newsEntries objectAtIndex:indexPath.row];
+        
+        // Create and push another view controller.
+        WebContentViewController *webContentViewController = [[WebContentViewController alloc] initWithNewsRecord:newsRecord];
+        
+        // Pass the selected object to the new view controller.
+        [self.navigationController pushViewController:webContentViewController animated:YES];
+        [webContentViewController release];
+    }
+}
+
 //  Method handles loaded news and name
-- (void)handleLoadedNewsAndName:(NSArray *)loadedNews andName:(NSString *)name
-{
+- (void)handleLoadedNewsAndName:(NSArray *)loadedNews andName:(NSString *)name {
     [self.newsRecords addObjectsFromArray:loadedNews];
     [self.navigationItem setTitle:name];
     // tell our table view to reload its data, now that parsing has completed
@@ -216,8 +255,7 @@ static NSString *const NewsFeed =
 #pragma mark - NSURLConnection delegate methods
 
 //  Delegate method to handle error messages
-- (void)handleError:(NSError *)error
-{
+- (void)handleError:(NSError *)error {
     NSString *errorMessage = [error localizedDescription];
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Cannot Show News Feed"
                                                         message:errorMessage
@@ -229,24 +267,20 @@ static NSString *const NewsFeed =
 }
 
 //  Delegate method called when connection did receive a response
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     self.newsData = [NSMutableData data];    // start off with new data
 }
 
 //  Delegate method called when connection did receive data
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     [newsData appendData:data];  // append incoming data
 }
 
 //  Delegate method called when connection fails
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
-    if ([error code] == kCFURLErrorNotConnectedToInternet)
-    {
+    if ([error code] == kCFURLErrorNotConnectedToInternet) {
         // if we can identify the error, we can present a more precise message to the user.
         NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"No Connection Error"
                                                              forKey:NSLocalizedDescriptionKey];
@@ -255,8 +289,7 @@ static NSString *const NewsFeed =
                                                      userInfo:userInfo];
         [self handleError:noConnectionError];
     }
-    else
-    {
+    else {
         // otherwise handle the error generically
         [self handleError:error];
     }
@@ -265,11 +298,9 @@ static NSString *const NewsFeed =
 }
 
 //  Delegate method called when connection did finish loading
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     self.newsFeedConnection = nil;   // release our connection
     
-    //[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [activityIndicator stopAnimating];
     
     // create the queue to run our ParseOperation
@@ -305,12 +336,10 @@ static NSString *const NewsFeed =
 #pragma mark - Method for ImageDownloaderDelegate
 
 // called by our ImageDownloader when an image is ready to be displayed
-- (void)newsImageDidLoad:(NSIndexPath *)indexPath
-{
+- (void)newsImageDidLoad:(NSIndexPath *)indexPath {
     ImageDownloader *imageDownloader = [imageDownloadsInProgress objectForKey:indexPath];
-    if (imageDownloader != nil)
-    {
-        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:imageDownloader.indexPathInTableView];
+    if (imageDownloader != nil) {
+        NewsFeedCell *cell = (NewsFeedCell *)[self.tableView cellForRowAtIndexPath:imageDownloader.indexPathInTableView];
         
         // Display the new image just loaded
         cell.imageView.image = imageDownloader.newsRecord.newsImage;
@@ -323,12 +352,62 @@ static NSString *const NewsFeed =
 
 #pragma mark - Custom methods
 
+// will adjust subviews' frames for visible cells
+- (void)reframeForVisibleCells {
+    NSArray *visibleCells = [self.tableView visibleCells];
+    NSLog(@"visible cells count: %d", [visibleCells count]);
+    for (UITableViewCell *cell in visibleCells) {
+        [self setGradientColorToCell:cell];
+        [self reframeCellElements:cell];
+    }
+}
+
+// will adjust frames to fit cell
+- (void)reframeCellElements:(UITableViewCell*)cell {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    [self reframeCellElements:cell forRowAtIndexPath:indexPath];
+}
+
+// will adjust frames to fit cell
+- (void)reframeCellElements:(UITableViewCell*)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NewsFeedCell *newsFeedCell = (NewsFeedCell*)cell;
+    
+    // Calculates width by disconsidering DisclosureIndicator (>) width to avoid overlapping
+    float calculatedConstrainedWidth = cell.contentView.frame.size.width - newsFeedCell.headlineLabel.frame.origin.x - kCellPaddingRigth; // takes label x origin to consider padding
+    
+    CGSize headlineLabelSize = [Utils getLabelSize:newsFeedCell.headlineLabel withConstrainedWidth:calculatedConstrainedWidth];
+    
+    newsFeedCell.headlineLabel.frame =  CGRectMake(newsFeedCell.headlineLabel.frame.origin.x, newsFeedCell.headlineLabel.frame.origin.y, headlineLabelSize.width, headlineLabelSize.height);
+    
+    if ([self.newsEntries count] > 0) {
+        
+        
+        NewsRecord *newsRecord = [self.newsEntries objectAtIndex:indexPath.row];
+        
+        CGSize sluglineLabelSize;
+        if (newsRecord.hasSlugline){
+            if (newsRecord.hasImage) {
+                // reset calculatedConstrainedWidth
+                calculatedConstrainedWidth = calculatedConstrainedWidth - kImageWidth - kCellPaddingRigth;
+            }
+            sluglineLabelSize = [Utils getLabelSize:newsFeedCell.slugLineLabel withConstrainedWidth:calculatedConstrainedWidth];
+        }
+        
+        newsFeedCell.slugLineLabel.frame =  CGRectMake(newsFeedCell.headlineLabel.frame.origin.x, newsFeedCell.headlineLabel.frame.origin.y + newsFeedCell.headlineLabel.frame.size.height, sluglineLabelSize.width, sluglineLabelSize.height);
+        
+        if (newsRecord.hasImage) {
+            CGFloat imageViewFrameX = cell.contentView.frame.size.width - kImageWidth - kCellPaddingRigth;
+            newsFeedCell.imageView.frame = CGRectMake(imageViewFrameX, newsFeedCell.headlineLabel.frame.origin.y + newsFeedCell.headlineLabel.frame.size.height, kImageWidth, kImageHeight);
+        }
+    }
+
+}
+
 // Starts image download
-- (void)startImageDownload:(NewsRecord *)newsRecord forIndexPath:(NSIndexPath *)indexPath
-{
+- (void)startImageDownload:(NewsRecord *)newsRecord forIndexPath:(NSIndexPath *)indexPath {
     ImageDownloader *imageDownloader = [imageDownloadsInProgress objectForKey:indexPath];
-    if (imageDownloader == nil)
-    {
+    if (imageDownloader == nil) {
         imageDownloader = [[ImageDownloader alloc] init];
         imageDownloader.newsRecord = newsRecord;
         imageDownloader.indexPathInTableView = indexPath;
@@ -339,39 +418,68 @@ static NSString *const NewsFeed =
     }
 }
 
-// this method is used in case the user scrolled the list to a point where the cells don't have image yet
-- (void)loadImagesForOnscreenRows
-{
-    if ([self.newsEntries count] > 0)
-    {
+// this method is used in case the user scrolled the list to where the cells don't have image yet
+- (void)loadImagesForOnscreenRows {
+    if ([self.newsEntries count] > 0) {
         NSArray *visiblePaths = [self.tableView indexPathsForVisibleRows];
-        for (NSIndexPath *indexPath in visiblePaths)
-        {
+        for (NSIndexPath *indexPath in visiblePaths) {
             NewsRecord *newsRecord = [self.newsEntries objectAtIndex:indexPath.row];
             // won't download if the news already has an image
             // or if has no image on feed
-            if (!newsRecord.newsImage && ![newsRecord.thumbnailImageURLString isKindOfClass:[NSNull class]])
-            {
+            if (!newsRecord.newsImage && newsRecord.thumbnailImageURLString) {
                 [self startImageDownload:newsRecord forIndexPath:indexPath];
             }
         }
     }
 }
 
+// This method set the gradient color to the cell background
+- (void)setGradientColorToCell:(UITableViewCell *)cell {
+    [cell setBackgroundColor:[UIColor clearColor]];
+    
+    CAGradientLayer *grad = [CAGradientLayer layer];
+    grad.frame = cell.bounds;
+    grad.colors = [NSArray arrayWithObjects:(id)[[UIColor whiteColor] CGColor], (id)[[UIColor lightGrayColor] CGColor], nil];
+    
+    UIView *newBackgroundView = [[UIView alloc] init];
+    [cell setBackgroundView:newBackgroundView];
+    [cell.backgroundView.layer insertSublayer:grad atIndex:0];
+    [newBackgroundView release];
+    
+    CAGradientLayer *selectedGrad = [CAGradientLayer layer];
+    selectedGrad.frame = cell.bounds;
+    selectedGrad.colors = [NSArray arrayWithObjects:(id)[[UIColor lightGrayColor] CGColor], (id)[[UIColor whiteColor] CGColor], nil];
+    
+    UIView *newSelectedView = [[UIView alloc] init];
+    [cell setSelectedBackgroundView:newSelectedView];
+    [cell.selectedBackgroundView.layer insertSublayer:selectedGrad atIndex:0];
+    [newSelectedView release];
+    
+}
+
+// Calculates cell width screen size and orientation
+- (CGFloat) cellWidthWithScreenBoundsAndDeviceOrientation {
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
+    
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    float width = UIDeviceOrientationIsLandscape(orientation) ? screenHeight : screenWidth;
+    
+    return width;
+}
+
 #pragma mark - Methods for UIScrollViewDelegate
 
 // Load images for all onscreen rows when scrolling is finished
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    if (!decelerate)
-    {
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (!decelerate) {
         [self loadImagesForOnscreenRows];
     }
 }
 
 // Load images when scrolling ends decelerating
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     [self loadImagesForOnscreenRows];
 }
 

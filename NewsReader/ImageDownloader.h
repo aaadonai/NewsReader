@@ -8,13 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+#define kImageHeight 60
+#define kImageWidth 90
+
 @class NewsRecord;
 @class NewsReaderViewController;
 
 @protocol ImageDownloaderDelegate;
 
-@interface ImageDownloader : NSObject
-{
+@interface ImageDownloader : NSObject {
     NewsRecord *appRecord;
     NSIndexPath *indexPathInTableView;
     id <ImageDownloaderDelegate> delegate;

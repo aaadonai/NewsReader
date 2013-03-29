@@ -21,8 +21,10 @@
 		A951BE4117030F28000D3866 /* ImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = A951BE4017030F28000D3866 /* ImageDownloader.m */; };
 		A951BE4417030F60000D3866 /* ParseOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A951BE4317030F60000D3866 /* ParseOperation.m */; };
 		A951BE4A1703EEE2000D3866 /* Placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = A951BE491703EEE2000D3866 /* Placeholder.png */; };
-		A951BE4C1704073A000D3866 /* Placeholder2.png in Resources */ = {isa = PBXBuildFile; fileRef = A951BE4B1704073A000D3866 /* Placeholder2.png */; };
 		A951BE4F17041D18000D3866 /* WebContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A951BE4E17041D18000D3866 /* WebContentViewController.m */; };
+		A951BE5217044969000D3866 /* NewsFeedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A951BE5117044969000D3866 /* NewsFeedCell.m */; };
+		A951BE591704929E000D3866 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A951BE581704929E000D3866 /* QuartzCore.framework */; };
+		A9CBEA3817051C4F00DAFDCD /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = A9CBEA3717051C4F00DAFDCD /* Utils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,9 +50,14 @@
 		A951BE4217030F60000D3866 /* ParseOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseOperation.h; sourceTree = "<group>"; };
 		A951BE4317030F60000D3866 /* ParseOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseOperation.m; sourceTree = "<group>"; };
 		A951BE491703EEE2000D3866 /* Placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Placeholder.png; sourceTree = "<group>"; };
-		A951BE4B1704073A000D3866 /* Placeholder2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Placeholder2.png; sourceTree = "<group>"; };
 		A951BE4D17041D18000D3866 /* WebContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebContentViewController.h; sourceTree = "<group>"; };
 		A951BE4E17041D18000D3866 /* WebContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebContentViewController.m; sourceTree = "<group>"; };
+		A951BE5017044969000D3866 /* NewsFeedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsFeedCell.h; sourceTree = "<group>"; };
+		A951BE5117044969000D3866 /* NewsFeedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsFeedCell.m; sourceTree = "<group>"; };
+		A951BE5717047BE3000D3866 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		A951BE581704929E000D3866 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		A9CBEA3617051C4F00DAFDCD /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		A9CBEA3717051C4F00DAFDCD /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A951BE591704929E000D3866 /* QuartzCore.framework in Frameworks */,
 				A951BE1D1702C78B000D3866 /* UIKit.framework in Frameworks */,
 				A951BE1F1702C78B000D3866 /* Foundation.framework in Frameworks */,
 				A951BE211702C78B000D3866 /* CoreGraphics.framework in Frameworks */,
@@ -87,6 +95,7 @@
 		A951BE1B1702C78B000D3866 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A951BE581704929E000D3866 /* QuartzCore.framework */,
 				A951BE1C1702C78B000D3866 /* UIKit.framework */,
 				A951BE1E1702C78B000D3866 /* Foundation.framework */,
 				A951BE201702C78B000D3866 /* CoreGraphics.framework */,
@@ -99,16 +108,10 @@
 			children = (
 				A951BE2B1702C78B000D3866 /* AppDelegate.h */,
 				A951BE2C1702C78B000D3866 /* AppDelegate.m */,
-				A951BE391702D0A8000D3866 /* NewsReaderViewController.h */,
-				A951BE3A1702D0A8000D3866 /* NewsReaderViewController.m */,
-				A951BE3C17030A47000D3866 /* NewsRecord.h */,
-				A951BE3D17030A47000D3866 /* NewsRecord.m */,
-				A951BE3F17030F28000D3866 /* ImageDownloader.h */,
-				A951BE4017030F28000D3866 /* ImageDownloader.m */,
-				A951BE4217030F60000D3866 /* ParseOperation.h */,
-				A951BE4317030F60000D3866 /* ParseOperation.m */,
-				A951BE4D17041D18000D3866 /* WebContentViewController.h */,
-				A951BE4E17041D18000D3866 /* WebContentViewController.m */,
+				A951BE56170449B3000D3866 /* Controllers */,
+				A951BE55170449A5000D3866 /* Views */,
+				A951BE5417044999000D3866 /* Models */,
+				A951BE5317044992000D3866 /* Helpers */,
 				A951BE471703EEC2000D3866 /* Resources */,
 				A951BE231702C78B000D3866 /* Supporting Files */,
 			);
@@ -125,6 +128,7 @@
 				A951BE2E1702C78B000D3866 /* Default.png */,
 				A951BE301702C78B000D3866 /* Default@2x.png */,
 				A951BE321702C78B000D3866 /* Default-568h@2x.png */,
+				A951BE5717047BE3000D3866 /* Common.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -140,10 +144,51 @@
 		A951BE481703EECA000D3866 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				A951BE4B1704073A000D3866 /* Placeholder2.png */,
 				A951BE491703EEE2000D3866 /* Placeholder.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		A951BE5317044992000D3866 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				A951BE3F17030F28000D3866 /* ImageDownloader.h */,
+				A951BE4017030F28000D3866 /* ImageDownloader.m */,
+				A951BE4217030F60000D3866 /* ParseOperation.h */,
+				A951BE4317030F60000D3866 /* ParseOperation.m */,
+				A9CBEA3617051C4F00DAFDCD /* Utils.h */,
+				A9CBEA3717051C4F00DAFDCD /* Utils.m */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		A951BE5417044999000D3866 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A951BE3C17030A47000D3866 /* NewsRecord.h */,
+				A951BE3D17030A47000D3866 /* NewsRecord.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		A951BE55170449A5000D3866 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A951BE5017044969000D3866 /* NewsFeedCell.h */,
+				A951BE5117044969000D3866 /* NewsFeedCell.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		A951BE56170449B3000D3866 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A951BE391702D0A8000D3866 /* NewsReaderViewController.h */,
+				A951BE3A1702D0A8000D3866 /* NewsReaderViewController.m */,
+				A951BE4D17041D18000D3866 /* WebContentViewController.h */,
+				A951BE4E17041D18000D3866 /* WebContentViewController.m */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,7 +247,6 @@
 				A951BE311702C78B000D3866 /* Default@2x.png in Resources */,
 				A951BE331702C78B000D3866 /* Default-568h@2x.png in Resources */,
 				A951BE4A1703EEE2000D3866 /* Placeholder.png in Resources */,
-				A951BE4C1704073A000D3866 /* Placeholder2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,6 +264,8 @@
 				A951BE4117030F28000D3866 /* ImageDownloader.m in Sources */,
 				A951BE4417030F60000D3866 /* ParseOperation.m in Sources */,
 				A951BE4F17041D18000D3866 /* WebContentViewController.m in Sources */,
+				A951BE5217044969000D3866 /* NewsFeedCell.m in Sources */,
+				A9CBEA3817051C4F00DAFDCD /* Utils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +380,7 @@
 				A951BE381702C78B000D3866 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

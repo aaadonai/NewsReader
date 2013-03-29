@@ -84,8 +84,18 @@ static NSString *kItemsStr  = @"items";
         NSLog(@"%d: %@",count++,[newsItem objectForKey:kHeadLineStr]);
         workingEntry.dateLine = [newsItem objectForKey:kDateLineStr];
         workingEntry.newsHeadline = [newsItem objectForKey:kHeadLineStr];
-        workingEntry.slugLine = [newsItem objectForKey:kSlugLineStr];
-        workingEntry.thumbnailImageURLString = [newsItem objectForKey:kImageURLStr];
+        // slugline can sometimes be null
+        if ([[newsItem objectForKey:kSlugLineStr] isKindOfClass:[NSNull class]]){
+            workingEntry.slugLine = nil;
+        } else {
+            workingEntry.slugLine = [newsItem objectForKey:kSlugLineStr];
+        }
+        // thumbnailImageURL can sometimes be null
+        if ([[newsItem objectForKey:kImageURLStr] isKindOfClass:[NSNull class]]) {
+            workingEntry.thumbnailImageURLString = nil;
+        } else {
+            workingEntry.thumbnailImageURLString = [newsItem objectForKey:kImageURLStr];
+        }
         workingEntry.newsURLString = [newsItem objectForKey:kNewsURLStr];
         [self.workingArray addObject:workingEntry];
         
@@ -93,8 +103,7 @@ static NSString *kItemsStr  = @"items";
     
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [completionHandler release];
     [errorHandler release];
     [dataToParse release];

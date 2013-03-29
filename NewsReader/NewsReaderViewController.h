@@ -10,16 +10,17 @@
 #import "ParseOperation.h"
 #import "NewsRecord.h"
 #import "ImageDownloader.h"
+#import <QuartzCore/QuartzCore.h>
 
-@interface NewsReaderViewController : UITableViewController<UIScrollViewDelegate, ImageDownloaderDelegate>
-{
+@class NewsFeedCell;
+
+@interface NewsReaderViewController : UITableViewController<UIScrollViewDelegate, ImageDownloaderDelegate> {
     NSArray *newsEntries;   // the main data model for our UITableView
     NSMutableDictionary *imageDownloadsInProgress;  // the set of IconDownloader objects for each app
 }
 
 @property (nonatomic, retain) NSArray *newsEntries;
 @property (nonatomic, retain) NSMutableDictionary *imageDownloadsInProgress;
-
 
 @property (nonatomic, retain) NSMutableArray *newsRecords;
 

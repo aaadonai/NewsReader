@@ -8,8 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NewsRecord : NSObject
-{
+@interface NewsRecord : NSObject {
     NSString *newsHeadline;
     NSString *slugLine;
     UIImage *newsImage;
@@ -24,5 +23,8 @@
 @property (nonatomic, retain) NSString *dateLine;
 @property (nonatomic, retain) NSString *thumbnailImageURLString;
 @property (nonatomic, retain) NSString *newsURLString;
+
+- (BOOL)hasImage;
+- (BOOL)hasSlugline;
 
 @end

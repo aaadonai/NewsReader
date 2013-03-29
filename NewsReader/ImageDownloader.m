@@ -9,9 +9,6 @@
 #import "ImageDownloader.h"
 #import "NewsRecord.h"
 
-#define kImageHeight 60
-#define kImageWidth 90
-
 @implementation ImageDownloader
 
 @synthesize newsRecord;
@@ -22,8 +19,7 @@
 
 #pragma mark
 
-- (void)dealloc
-{
+- (void)dealloc {
     [newsRecord release];
     [indexPathInTableView release];
     
@@ -35,8 +31,7 @@
     [super dealloc];
 }
 
-- (void)startDownload
-{
+- (void)startDownload {
     self.activeDownload = [NSMutableData data];
     
     NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:
@@ -46,8 +41,7 @@
     [conn release];
 }
 
-- (void)cancelDownload
-{
+- (void)cancelDownload {
     [self.imageConnection cancel];
     self.imageConnection = nil;
     self.activeDownload = nil;
@@ -57,13 +51,11 @@
 #pragma mark -
 #pragma mark Download support (NSURLConnectionDelegate)
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     [self.activeDownload appendData:data];
 }
 
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     // Clear the activeDownload property to allow later attempts
     self.activeDownload = nil;
     
@@ -71,22 +63,18 @@
     self.imageConnection = nil;
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     // Set temporary image
     UIImage *image = [[UIImage alloc] initWithData:self.activeDownload];
     
-    if (image.size.width != kImageWidth || image.size.height != kImageHeight)
-    {
+    if (image.size.width != kImageWidth || image.size.height != kImageHeight)     {
         CGSize itemSize = CGSizeMake(kImageWidth, kImageHeight);
         UIGraphicsBeginImageContext(itemSize);
         CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
         [image drawInRect:imageRect];
         self.newsRecord.newsImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-    }
-    else
-    {
+    } else     {
         self.newsRecord.newsImage = image;
     }
     

@@ -17,8 +17,21 @@
 @synthesize thumbnailImageURLString;
 @synthesize newsURLString;
 
-- (void)dealloc
-{
+- (BOOL)hasImage {
+    if (thumbnailImageURLString) {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)hasSlugline {
+    if (slugLine) {
+        return YES;
+    }
+    return NO;
+}
+
+- (void)dealloc {
     [newsHeadline release];
     [slugLine release];
     [newsImage release];

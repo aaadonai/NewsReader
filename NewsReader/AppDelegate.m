@@ -9,8 +9,8 @@
 #import "AppDelegate.h"
 #import "NewsReaderViewController.h"
 
-@interface AppDelegate ()
-{
+@interface AppDelegate () {
+    
     UIWindow *window;
     UINavigationController *navigationController;
     
@@ -26,8 +26,7 @@
 @synthesize navigationController;
 @synthesize newsReaderViewController;
 
-- (void)dealloc
-{
+- (void)dealloc {
     [navigationController release];
     [newsReaderViewController release];
     
@@ -35,13 +34,14 @@
     [super dealloc];
 }
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     
     newsReaderViewController = [[[NewsReaderViewController alloc] initWithStyle:UITableViewStylePlain] autorelease];
     
     navigationController = [[[UINavigationController alloc] initWithRootViewController:newsReaderViewController] autorelease];
+    
+    navigationController.navigationBar.tintColor = kDarkBlue;
     
     [self.window addSubview:navigationController.view];
       
