@@ -10,7 +10,8 @@
 
 @interface Utils : NSObject
 
-+ (CGSize)getLabelSize:(UILabel *)label withConstrainedWidth:(CGFloat) constrainedWidth;
++ (CGSize)getLabelSize:(UILabel *)label
+              withConstrainedWidth:(CGFloat) constrainedWidth;
 
 + (NSString *)datelineToDisplay:(NSString *)dateline;
 

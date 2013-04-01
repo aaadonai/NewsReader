@@ -34,12 +34,19 @@
     [super dealloc];
 }
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+- (BOOL)application:(UIApplication *)application
+            didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    newsReaderViewController = [[[NewsReaderViewController alloc] initWithStyle:UITableViewStylePlain] autorelease];
+    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen]
+                                                    bounds]] autorelease];
     
-    navigationController = [[[UINavigationController alloc] initWithRootViewController:newsReaderViewController] autorelease];
+    newsReaderViewController = [[[NewsReaderViewController alloc]
+                                 initWithStyle:UITableViewStylePlain]
+                                 autorelease];
+    
+    navigationController = [[[UINavigationController alloc] \
+                            initWithRootViewController:newsReaderViewController]
+                            autorelease];
     
     navigationController.navigationBar.tintColor = kDarkBlue;
     

@@ -35,8 +35,10 @@
     self.activeDownload = [NSMutableData data];
     
     NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:
-                             [NSURLRequest requestWithURL:
-                              [NSURL URLWithString:newsRecord.thumbnailImageURLString]] delegate:self];
+                                        [NSURLRequest requestWithURL:
+                                        [NSURL URLWithString:
+                                        newsRecord.thumbnailImageURLString]]
+                                        delegate:self];
     self.imageConnection = conn;
     [conn release];
 }
@@ -55,7 +57,8 @@
     [self.activeDownload appendData:data];
 }
 
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+- (void)connection:(NSURLConnection *)connection
+            didFailWithError:(NSError *)error {
     // Clear the activeDownload property to allow later attempts
     self.activeDownload = nil;
     
@@ -67,7 +70,7 @@
     // Set temporary image
     UIImage *image = [[UIImage alloc] initWithData:self.activeDownload];
     
-    if (image.size.width != kImageWidth || image.size.height != kImageHeight)     {
+    if (image.size.width != kImageWidth || image.size.height != kImageHeight) {
         CGSize itemSize = CGSizeMake(kImageWidth, kImageHeight);
         UIGraphicsBeginImageContext(itemSize);
         CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);

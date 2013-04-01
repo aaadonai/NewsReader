@@ -60,7 +60,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+                               (UIInterfaceOrientation)toInterfaceOrientation {
     return YES;
 }
 

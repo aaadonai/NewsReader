@@ -52,7 +52,10 @@ static NSString *kItemsStr  = @"items";
     self.workingArray = [NSMutableArray array];
     
     NSError *error = nil;
-    NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData: self.dataToParse options: NSJSONReadingMutableContainers error: &error];
+    NSDictionary *jsonDictionary =
+                     [NSJSONSerialization JSONObjectWithData: self.dataToParse
+                                        options:NSJSONReadingMutableContainers
+                                          error: &error];
     
     if (!jsonDictionary) {
         NSLog(@"Error parsing JSON: %@", error);
@@ -85,16 +88,19 @@ static NSString *kItemsStr  = @"items";
         workingEntry.dateLine = [newsItem objectForKey:kDateLineStr];
         workingEntry.newsHeadline = [newsItem objectForKey:kHeadLineStr];
         // slugline can sometimes be null
-        if ([[newsItem objectForKey:kSlugLineStr] isKindOfClass:[NSNull class]]){
+        if ([[newsItem objectForKey:kSlugLineStr]
+                      isKindOfClass:[NSNull class]]){
             workingEntry.slugLine = nil;
         } else {
             workingEntry.slugLine = [newsItem objectForKey:kSlugLineStr];
         }
         // thumbnailImageURL can sometimes be null
-        if ([[newsItem objectForKey:kImageURLStr] isKindOfClass:[NSNull class]]) {
+        if ([[newsItem objectForKey:kImageURLStr]
+                      isKindOfClass:[NSNull class]]) {
             workingEntry.thumbnailImageURLString = nil;
         } else {
-            workingEntry.thumbnailImageURLString = [newsItem objectForKey:kImageURLStr];
+            workingEntry.thumbnailImageURLString = [newsItem
+                                                     objectForKey:kImageURLStr];
         }
         workingEntry.newsURLString = [newsItem objectForKey:kNewsURLStr];
         [self.workingArray addObject:workingEntry];

@@ -11,7 +11,8 @@
 @implementation Utils
 
 // Will calculate label size based on label text and font
-+ (CGSize)getLabelSize:(UILabel *)label withConstrainedWidth:(CGFloat) constrainedWidth {
++ (CGSize)getLabelSize:(UILabel *)label
+              withConstrainedWidth:(CGFloat) constrainedWidth {
     return [label.text sizeWithFont:label.font
                   constrainedToSize:CGSizeMake(constrainedWidth, MAXFLOAT)
                       lineBreakMode:UILineBreakModeWordWrap];
@@ -34,13 +35,21 @@
 // 
 + (NSDate *)parseRFC3339Date:(NSString *)dateString
 {
-    NSDateFormatter *rfc3339TimestampFormatterWithTimeZone = [[NSDateFormatter alloc] init];
-    [rfc3339TimestampFormatterWithTimeZone setLocale:[[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"] autorelease]];
-    [rfc3339TimestampFormatterWithTimeZone setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
+    NSDateFormatter *rfc3339TimestampFormatterWithTimeZone =
+                                                 [[NSDateFormatter alloc] init];
+    [rfc3339TimestampFormatterWithTimeZone
+                            setLocale:[[[NSLocale alloc]
+                            initWithLocaleIdentifier:@"en_US_POSIX"]
+                            autorelease]];
+    [rfc3339TimestampFormatterWithTimeZone
+                                  setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
     
     NSDate *theDate = nil;
     NSError *error = nil;
-    if (![rfc3339TimestampFormatterWithTimeZone getObjectValue:&theDate forString:dateString range:nil error:&error]) {
+    if (![rfc3339TimestampFormatterWithTimeZone getObjectValue:&theDate
+                                                     forString:dateString
+                                                         range:nil
+                                                         error:&error]) {
         NSLog(@"Date '%@' could not be parsed: %@", dateString, error);
     }
     

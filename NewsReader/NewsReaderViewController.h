@@ -14,9 +14,15 @@
 
 @class NewsFeedCell;
 
-@interface NewsReaderViewController : UITableViewController<UIScrollViewDelegate, ImageDownloaderDelegate> {
-    NSArray *newsEntries;   // the main data model for our UITableView
-    NSMutableDictionary *imageDownloadsInProgress;  // the set of IconDownloader objects for each app
+@interface NewsReaderViewController : UITableViewController
+                                      <UIScrollViewDelegate,
+                                      ImageDownloaderDelegate> {
+    
+    // the main data model for our UITableView
+    NSArray *newsEntries;   
+                                          
+    // the set of IconDownloader objects for each app
+    NSMutableDictionary *imageDownloadsInProgress;  
 }
 
 @property (nonatomic, retain) NSArray *newsEntries;
