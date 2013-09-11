@@ -26,6 +26,9 @@
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         self.selectionStyle = UITableViewCellSelectionStyleGray;
         
+        self.autoresizesSubviews = YES;
+        self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
+        
         // Create Headline Label
         CGRect headlineFrame = CGRectMake(kCellPaddingLeft,
                                           kCellPadding,
@@ -68,9 +71,11 @@
                                            kCellPadding + kDefaultHeight,
                                            kImageWidth,
                                            kImageHeight);
-        self.imageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
+        self.imageView = [[[UIImageView alloc] initWithFrame:imageViewFrame]autorelease];
         
         [self addSubview:self.imageView];
+        
+        //self.imageView = nil;
         
         // Create Dateline Label
         CGFloat datelineFrameY = kCellPadding +

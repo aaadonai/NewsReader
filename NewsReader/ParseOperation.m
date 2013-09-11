@@ -58,7 +58,6 @@ static NSString *kItemsStr  = @"items";
                                           error: &error];
     
     if (!jsonDictionary) {
-        NSLog(@"Error parsing JSON: %@", error);
         self.errorHandler(error);
     } else {
         [self parseWithJSONDictionary:jsonDictionary];
@@ -81,10 +80,8 @@ static NSString *kItemsStr  = @"items";
     
     self.feedName = [jsonDictionary objectForKey:kNameStr];
     NSArray *newsItemsArray = [jsonDictionary objectForKey:kItemsStr];
-    int count = 0;
     for (NSDictionary *newsItem in newsItemsArray) {
         workingEntry = [[NewsRecord alloc] init];
-        NSLog(@"%d: %@",count++,[newsItem objectForKey:kHeadLineStr]);
         workingEntry.dateLine = [newsItem objectForKey:kDateLineStr];
         workingEntry.newsHeadline = [newsItem objectForKey:kHeadLineStr];
         // slugline can sometimes be null

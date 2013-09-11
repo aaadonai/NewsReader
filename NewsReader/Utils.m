@@ -50,7 +50,6 @@
                                                      forString:dateString
                                                          range:nil
                                                          error:&error]) {
-        NSLog(@"Date '%@' could not be parsed: %@", dateString, error);
     }
     
     [rfc3339TimestampFormatterWithTimeZone release];

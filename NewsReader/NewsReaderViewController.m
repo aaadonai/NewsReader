@@ -58,10 +58,15 @@ static NSString *const NewsFeed =
     
     // will adjust subviews' frames for visible cells
     [self reframeForVisibleCells];
+    //[self.tableView reloadData];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.view.autoresizesSubviews = YES;
+    
+    self.view.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
     
     self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
     self.tableView.rowHeight = kDefaultRowHeight;
@@ -209,16 +214,10 @@ static NSString *const NewsFeed =
 
         // Set up the cell
         NewsRecord *newsRecord = [self.newsEntries objectAtIndex:indexPath.row];
-        NSLog(@"indexPath.row: %d",indexPath.row);
         
         cell.headlineLabel.text = newsRecord.newsHeadline;
         cell.slugLineLabel.text = newsRecord.slugLine;
         cell.datelineLabel.text = [Utils datelineToDisplay:newsRecord.dateLine];
-        
-        NSLog(@"cell.datelineLabel.text: %@", cell.datelineLabel.text);
-        
-        NSLog(@"cell width: %f", cell.frame.size.width);
-        NSLog(@"slugline Y: %f", cell.slugLineLabel.frame.origin.y);
         
         // Only load cached images; defer new downloads until scrolling ends
         if (!newsRecord.newsImage)
@@ -260,6 +259,7 @@ static NSString *const NewsFeed =
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)
                                          fromInterfaceOrientation {
     [self reframeForVisibleCells];
+    //[self.tableView reloadData];
     
 }
 
@@ -411,21 +411,23 @@ static NSString *const NewsFeed =
 #pragma mark - Custom methods
 
 // will adjust subviews' frames for visible cells
+
 - (void)reframeForVisibleCells {
     NSArray *visibleCells = [self.tableView visibleCells];
-    NSLog(@"visible cells count: %d", [visibleCells count]);
     for (UITableViewCell *cell in visibleCells) {
         [self setGradientColorToCell:cell];
         [self reframeCellElements:cell];
     }
 }
 
+//TODO remove this method use autoresize instead
 // will adjust frames to fit cell
 - (void)reframeCellElements:(UITableViewCell*)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     [self reframeCellElements:cell forRowAtIndexPath:indexPath];
 }
 
+//TODO remove this method use autoresize instead
 // will adjust frames to fit cell
 - (void)reframeCellElements:(UITableViewCell*)cell
           forRowAtIndexPath:(NSIndexPath *)indexPath {
